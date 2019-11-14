@@ -1,0 +1,30 @@
+{
+  "name": "dxf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha -r ./node_modules/ts-node/register tests/**/*.ts",
+    "build": "rimraf ./build && webpack",
+    "tsc": "rimraf ./build && tsc -p ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.2.5",
+    "@types/mocha": "^5.2.7",
+    "@types/webpack": "^4.39.8",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "rimraf": "^3.0.0",
+    "ts-loader": "^6.2.1",
+    "ts-node": "^8.5.0",
+    "typescript": "^3.7.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "@types/file-saver": "^2.0.1",
+    "file-saver": "^2.0.2"
+  }
+}
