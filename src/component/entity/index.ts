@@ -8,6 +8,7 @@ export * from "./DimensionRadial";
 export * from "./DimensionRotated";
 export * from "./Ellipse";
 export * from "./Entity";
+export * from "./Hatch";
 export * from "./Line";
 export * from "./LWPolyline";
 export * from "./MText";

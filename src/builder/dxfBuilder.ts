@@ -2,6 +2,7 @@ import { DXF, DXFClass, TableAppID, AppID, TableBlock, TableDimStyle, TableLType
 import { Variable } from "../component/header";
 import { Dictionary, Layout } from "../component/objects";
 import { SpaceBuilder } from "./spaceBuilder";
+import { LineTypeData, ColorIndex } from "../common";
 
 export class DXFBuilder {
     private dxf = new DXF();
@@ -48,20 +49,25 @@ export class DXFBuilder {
         // appid
         t.tableAppID.push(new AppID('ACAD', dxf.Handle));
         // ltype
+        const center = LineTypeData.center;
+        const dashed = LineTypeData.dashed;
         t.tableLType.push(
             new LType('CONTINUOUS', dxf.Handle), 
             new LType('ByLayer', dxf.Handle), 
             new LType('ByBlock', dxf.Handle), 
-            new LType(
-                'CENTER', 
-                dxf.Handle, 
-                'Center ____ _ ____ _ ____ _ ____ _ ____ _ ____', 
-                [1.25, -0.25, 0.25, -0.25])
+            new LType(center.name, dxf.Handle, center.desc, center.data),
+            new LType(dashed.name, dxf.Handle, dashed.desc, dashed.data)
         );
         // layer
         t.tableLayer.push(
             new Layer('0', dxf.Handle),
-            new Layer('Defpoints', dxf.Handle, 'CONTINUOUS', 7, true)
+            new Layer('Defpoints', dxf.Handle, 'CONTINUOUS', ColorIndex.gray, true),
+            new Layer('细实线', dxf.Handle, 'CONTINUOUS', ColorIndex.green),
+            new Layer('中粗线', dxf.Handle, 'CONTINUOUS', ColorIndex.yellow),
+            new Layer('粗线', dxf.Handle, 'CONTINUOUS', ColorIndex.red),
+            new Layer('加粗线', dxf.Handle, 'CONTINUOUS', ColorIndex.magenta),
+            new Layer('虚线', dxf.Handle, 'DASHED', ColorIndex.blue),
+            new Layer('中心线', dxf.Handle, 'CENTER', ColorIndex.cyan)
         );
         // style
         t.tableStyle.push(
@@ -129,5 +135,25 @@ export class DXFBuilder {
 
 export function dxfDemo() {
     const builder = new DXFBuilder();
+    const model = builder.modelSpace;
+    // model.line(0, 0, 100, 100);
+    // model.text('hello world', 0, 0);
+    // model.setLayer('中粗线').line(100, 100, 200, 100);
+    // model.lwpolyline(
+    //     0, 0, 0,
+    //     100, 0, 0,
+    //     100, 100, 0,
+    //     0, 100, 0,
+    //     0, 0, 0
+    // );
+    model.hatch(
+        'ansi31', 
+        0,
+        100, 100, 0,
+        120, 100, 0,
+        120, 120, 0,
+        100, 120, 0,
+        100, 100, 0
+    )
     builder.saveBlob('dxf测试');
 }

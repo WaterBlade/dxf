@@ -9,15 +9,18 @@ export class Hatch extends Entity{
         ownerHandle: string, 
         spaceSign: number = 0, 
         protected patternName: string,
-        protected patternData: number[],
+        protected patternData: Array<Array<number>>,
         protected angle: number,
         protected scale: number=1,
-        protected fillType: number = 0,
         ...xyBulges: number[]
     ) {
         super(layer, handle, ownerHandle, spaceSign);
         if(xyBulges.length % 3 !== 0){
-            throw Error('x y bulges dones not match in hatch');
+            throw Error('x y bulges does not match in hatch');
+        }
+        if(xyBulges[0] !== xyBulges[xyBulges.length-3] || 
+            xyBulges[1] !== xyBulges[xyBulges.length-2]){
+            throw Error('hatch boundary does not closed!')
         }
         this.xyBulges = xyBulges;
     }
@@ -34,9 +37,9 @@ export class Hatch extends Entity{
             30, 0,
             210, 0,
             220, 0,
-            240, 1,
+            230, 1,
             2, this.patternName,
-            70, this.fillType,
+            70, 0,
             71, 1,
             91, 1,
             92, 7,
@@ -48,7 +51,7 @@ export class Hatch extends Entity{
             root.push(
                 10, this.xyBulges[i],
                 20, this.xyBulges[i+1],
-                30, this.xyBulges[i+2]
+                42, this.xyBulges[i+2]
             )
         }
         root.push(
@@ -59,8 +62,43 @@ export class Hatch extends Entity{
             52, this.angle,
             41, this.scale,
             77, 0,
+            78, this.patternData.length
         )
-        // TODO: finish the hatch;
+        for(const row of this.patternData){
+            const head = row.slice(0, 5);
+            const tail = row.slice(5);
+
+            head[0] += this.angle;
+            const x = head[1];
+            const y = head[2];
+            const radian12 = this.angle * Math.PI / 180;
+            head[1] = (x * Math.cos(radian12) - y * Math.sin(radian12)) * this.scale;
+            head[2] = (y * Math.cos(radian12) + x * Math.sin(radian12)) * this.scale;
+
+            const dx = head[3];
+            const dy = head[4];
+            const radian34 = head[0] * Math.PI / 180;
+            head[3] = (dx * Math.cos(radian34) - dy * Math.sin(radian34)) * this.scale;
+            head[4] = (dy * Math.cos(radian34) + dx * Math.sin(radian34)) * this.scale;
+
+            root.push(
+                53, head[0],
+                43, head[1],
+                44, head[2],
+                45, head[3],
+                46, head[4],
+                79, tail.length
+            )
+            for(const t of tail){
+                root.push(40, (this.scale * t).toFixed(3))
+            }
+        }
+        root.push(
+            47, 1,
+            98, 1,
+            10, this.xyBulges[0],
+            20, this.xyBulges[1]
+        )
 
     }
     

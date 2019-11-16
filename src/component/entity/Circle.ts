@@ -1,7 +1,14 @@
 import { Groupcode } from "../groupcode";
 import { Entity } from "./Entity";
 export class Circle extends Entity {
-    constructor(layer: string, handle: string, ownerHandle: string, spaceSign: number = 0, protected x: number, protected y: number, protected radius: number) {
+    constructor(
+        layer: string, 
+        handle: string, 
+        ownerHandle: string, 
+        spaceSign: number = 0, 
+        protected x: number, 
+        protected y: number, 
+        protected radius: number) {
         super(layer, handle, ownerHandle, spaceSign);
     }
     toGroupcode(root: Groupcode) {

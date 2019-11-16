@@ -14,7 +14,20 @@ export class Style extends TableItem {
         super();
     }
     toGroupcode(root: Groupcode) {
-        root.push(0, 'STYLE', 5, this.handle, 100, 'AcDbSymbolTableRecord', 100, 'AcDbTextStyleTableRecord', 2, this.name, 70, 0, 40, 0, 41, this.widthFactor, 50, this.obliqueDegree);
+        root.push(
+            0, 'STYLE', 
+            5, this.handle, 
+            100, 'AcDbSymbolTableRecord', 
+            100, 'AcDbTextStyleTableRecord', 
+            2, this.name, 
+            70, 0, 
+            40, 0, 
+            41, this.widthFactor, 
+            50, this.obliqueDegree,
+            71, 0,
+            3, this.fontName,
+            4, this.bigFontName
+        );
         if (this.systemFontName && this.extData) {
             root.push(
                 1001, 'ACAD', 

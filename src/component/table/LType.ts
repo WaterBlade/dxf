@@ -1,9 +1,8 @@
 import { Groupcode } from "../groupcode";
 import { TableItem } from "./Table";
-import { LineType } from "../../common";
 export class LType extends TableItem {
     constructor(
-        protected name: LineType | 'ByLayer' | 'ByBlock', 
+        protected name: string, 
         protected handle: string, 
         protected note?: string, 
         protected data?: number[]
