@@ -1,5 +1,5 @@
 import { Content, Groupcode, CompositeContent } from "./groupcode";
-import { PaperSize } from "../common";
+import { PaperSizeType, PaperSizeData } from "../common";
 
 export abstract class ObjectItem extends Content{
     constructor(
@@ -31,15 +31,16 @@ export class Layout extends ObjectItem{
     constructor(
         name: string, handle: string, ownerHandle: string,
         public spaceHandle: string,
-        public paperSize: 'A1' | 'A2' | 'A3'= 'A1'
+        public paperSize: PaperSizeType = 'A1'
     ){
         super(name, handle, ownerHandle);
     }
     toGroupcode(root: Groupcode){
-        const [xLeftBottom, yLeftBottom] = PaperSize[this.paperSize].leftBottom;
-        const [xRightTop, yRightTop] = PaperSize[this.paperSize].rightTop;
-        const width = PaperSize[this.paperSize].width;
-        const height = PaperSize[this.paperSize].height;
+        const paper = PaperSizeData.get(this.paperSize)!;
+        const [xLeftBottom, yLeftBottom] = paper.leftBottom;
+        const [xRightTop, yRightTop] = paper.rightTop;
+        const width = paper.width;
+        const height = paper.height;
         root.push(
             0, 'LAYOUT',
             5, this.handle,

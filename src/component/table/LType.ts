@@ -4,7 +4,7 @@ export class LType extends TableItem {
     constructor(
         protected name: string, 
         protected handle: string, 
-        protected note?: string, 
+        protected desc?: string, 
         protected data?: number[]
     ) {
         super();
@@ -17,7 +17,7 @@ export class LType extends TableItem {
             100, 'AcDbLinetypeTableRecord', 
             2, this.name, 
             70, 0);
-        if (this.note === undefined || this.data === undefined) {
+        if (this.desc === undefined || this.data === undefined) {
             root.push(
                 3, '', 
                 72, 65, 
@@ -26,7 +26,7 @@ export class LType extends TableItem {
         }
         else {
             root.push(
-                3, this.note!, 
+                3, this.desc!, 
                 72, 5, 
                 73, this.data!.length, 
                 40, this.data!.reduce((pre, next) => pre + next));

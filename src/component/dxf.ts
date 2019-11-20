@@ -11,6 +11,7 @@ export class DXF{
     private groupcode = new Groupcode();
     private handleNum = 1;
     private paperNum = 0;
+    private viewportNum = 1;
 
     header = new Header();
     classes = new Classes();
@@ -18,6 +19,8 @@ export class DXF{
     blocks = new Blocks();
     entities = new Entities();
     objects = new Objects();
+
+    blockNameStore: string[] = [];
 
 
     get Handle(){
@@ -30,6 +33,10 @@ export class DXF{
         }else{
             return `*PAPER_SPACE${this.paperNum++}`
         }
+    }
+
+    get ViewportId(){
+        return `${this.viewportNum++}`
     }
 
     saveBlob(name: string){
