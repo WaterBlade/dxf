@@ -119,10 +119,10 @@ export class HatchLWPolyline extends Edge {
         if (xyBulges.length % 3 !== 0) {
             throw Error('x y bulges does not match in hatch');
         }
-        if (xyBulges[0] !== xyBulges[xyBulges.length - 3] ||
-            xyBulges[1] !== xyBulges[xyBulges.length - 2]) {
-            throw Error('hatch boundary does not closed!')
-        }
+        // if (xyBulges[0] !== xyBulges[xyBulges.length - 3] ||
+        //     xyBulges[1] !== xyBulges[xyBulges.length - 2]) {
+        //     throw Error('hatch boundary does not closed!')
+        // }
         this.xyBulges = xyBulges;
     }
     get Seed() {

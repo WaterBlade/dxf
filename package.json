@@ -2,9 +2,10 @@
   "name": "dxf",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha -r ./node_modules/ts-node/register tests/**/*.ts",
+    "test": "./node_modules/.bin/mocha -r ./node_modules/ts-node/register src/**/*.test.ts",
+    "watch": "mocha -r ./node_modules/ts-node/register src/**/*.test.ts --watch --watch-extensions=ts",
     "build": "rimraf ./build && webpack",
     "tsc": "rimraf ./build && tsc -p ."
   },

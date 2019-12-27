@@ -73,11 +73,14 @@ export class DXFBuilder {
         );
         // style
         t.tableStyle.push(
-            new Style('STANDARD', dxf.Handle)
+            new Style('STANDARD', dxf.Handle),
+            new Style('HZ', dxf.Handle, 'simplex', 'hztxt'),
+            new Style('TITLE', dxf.Handle, 'simplex', 'hztxt', 1.0)
         );
         // dimstyle
         t.tableDimStyle.push(
-            new DimStyle('STANDARD', dxf.Handle, t.tableStyle.styles['STANDARD'])
+            new DimStyle('STANDARD', dxf.Handle, t.tableStyle.styles['STANDARD']),
+            new DimStyle('100', dxf.Handle, t.tableStyle.styles['HZ'], 0.1, 1000)
         )
     }
     private initObjects() {

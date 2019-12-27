@@ -24,7 +24,9 @@
         "**/_*",
         "demo",
         "scripts",
-        "webpack.config.ts"
+        "webpack.config.ts",
+        "src/**/*.test.ts",
+        "build"
     ],
     "typedocOptions": {
         "mode": "file",

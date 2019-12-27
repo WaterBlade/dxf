@@ -34,6 +34,7 @@ export class SpaceBuilder{
     private dimStyle = 'STANDARD';
     private lineScale = 1;
     private textHeight = 3.5;
+    private textAlign = 0;
     private patternScale = 1;
     constructor(
         private dxf: DXF,
@@ -65,6 +66,13 @@ export class SpaceBuilder{
     setTextHeight(textHeight: number){
         this.textHeight = textHeight;
         return this;
+    }
+    setTextAlign(align: 'middleCenter' | 'bottomCenter'){
+        if(align === 'middleCenter'){
+            this.textAlign = 4;
+        }else{
+            this.textAlign = 1;
+        }
     }
     setPatternScale(scale: number){
         this.patternScale = scale;
@@ -377,6 +385,7 @@ export class SpaceBuilder{
             xInsert,
             yInsert,
             this.textHeight,
+            this.textAlign,
         )
         this.container.push(t);
         return this;
